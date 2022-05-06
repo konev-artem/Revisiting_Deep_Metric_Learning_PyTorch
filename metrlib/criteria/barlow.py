@@ -26,7 +26,7 @@ class Criterion(torch.nn.Module):
     def forward(self, batch, labels, **kwargs):
         assert torch.all(labels[0::2] == labels[1::2]).item()
         batch_norm = batch.sub(batch.mean(dim=0)).div(batch.std(dim=0))
-        cc = batch_norm[0::2].T @ batch_norm[1::2]
+        cc = batch_norm[0::2].T @ batch_norm[1::2] / (len(batch) // 2)
         inv_term = torch.square(torch.diag(cc) - 1.0).sum()
         cc.fill_diagonal_(0.0)
         red_term = cc.square().sum()

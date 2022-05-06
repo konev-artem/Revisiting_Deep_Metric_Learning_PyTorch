@@ -4,7 +4,7 @@ python metrlib/main.py \
   --dataset cars196 \
   --kernels 6 \
   --source . \
-  --n_epochs 150 \
+  --n_epochs 500 \
   --log_online \
   --project metric-learning \
   --seed 0 \
