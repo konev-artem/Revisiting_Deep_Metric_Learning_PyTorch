@@ -137,6 +137,7 @@ def loss_specific_parameters(parser):
 
     ### Barlow Loss
     parser.add_argument('--loss_barlow_lambda',     default=0.005,  type=float, help='Parameter between loss terms.')
+    parser.add_argument('--loss_barlow_margin_alpha', type=float, help='Weight for losses.')
 
     return parser
 

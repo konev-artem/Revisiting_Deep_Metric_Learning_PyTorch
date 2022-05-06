@@ -11,7 +11,8 @@ python metrlib/main.py \
   --gpu 0 \
   --bs 112 \
   --samples_per_class 2 \
-  --loss barlow \
+  --loss barlow_margin \
+  --loss_barlow_margin_alpha 0.0 \
   --batch_mining rho_distance \
   --arch resnet50_frozen_normalize \
   --miner_rho_distance_cp 0.35 \
