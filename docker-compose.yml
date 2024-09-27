@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  metric_learning:
+    image: metric_learning
+    container_name: $USER-metric_learning
+    user: docker
+    working_dir: /home/docker/metric-learning
+    command: [ "bash" ]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: $USER_ID
+        GROUP_ID: $GROUP_ID
+        CUDA_BASE: $CUDA_BASE
+        CUDA_TORCH: $CUDA_TORCH
+        PYTHON_VERSION: $PYTHON_VERSION
+    environment:
+      - WANDB_API_KEY=$WANDB_API_KEY
+      - WANDB_ENTITY=$WANDB_ENTITY
+      - WANDB_PROJECT=$WANDB_PROJECT
+      - WANDB_MODE=online
+    volumes:
+      - type: bind
+        source: ./cars196
+        target: /home/docker/metric-learning/cars196
+      - type: bind
+        source: ./runs
+        target: /home/docker/metric-learning/runs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ "6" ]
+              capabilities: [ gpu ]
+        limits:
+          memory: 128g
+    cpuset: "192-223"
+    security_opt:
+      - label:disable
+    shm_size: 16g
